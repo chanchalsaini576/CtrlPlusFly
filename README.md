@@ -80,6 +80,7 @@ me security ke liye iska use mat karna — uske liye Python ki `cryptography` li
 
 (Fernet) use karna better rahega.
 
+
 ## Sirf frontend dekhna ho (bina backend chalaye)
 
 Agar sirf simulator ya research pages dekhne hai, to seedha `index.html` ko double-click
