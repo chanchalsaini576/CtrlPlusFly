@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desert Basin — Ctrl + Fly Simulator</title>
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .zone-desert{
+    background: linear-gradient(180deg,#2b1608 0%, #7a3d15 38%, #b9682b 55%, #d98c3f 62%, #3a2412 63%, #1a0f08 100%);
+  }
+  .z-sun{ position:absolute; top:12%; right:16%; width:110px; height:110px; border-radius:50%;
+    background:radial-gradient(circle at 40% 40%, #ffe2a8, #ffb454 60%, transparent 72%);
+    box-shadow:0 0 90px 30px rgba(255,180,84,.5); }
+  .z-dune{ position:absolute; left:0; width:140%; }
+  .z-dune.d1{ bottom:8%; opacity:.9; animation:duneDrift 40s linear infinite; }
+  .z-dune.d2{ bottom:0; opacity:1; animation:duneDrift 55s linear infinite reverse; }
+  @keyframes duneDrift{ from{ transform:translateX(0);} to{ transform:translateX(-12%);} }
+  .z-haze{ position:absolute; inset:0; background:linear-gradient(180deg, transparent 40%, rgba(255,180,84,.08) 60%, transparent 75%); animation:hazeShift 6s ease-in-out infinite alternate; }
+  @keyframes hazeShift{ from{opacity:.5} to{opacity:1} }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><span class="plus">Ctrl</span>&nbsp;+&nbsp;Fly<span class="dot"></span></a>
+    <div class="navlinks">
+      <a href="../index.html">Home</a>
+      <a href="../simulator.html" class="active">Simulator</a>
+      <a href="../research.html">Research</a>
+      <a href="../telemetry.html">Telemetry</a>
+      <a href="../about.html">About</a>
+    </div>
+  </div>
+</nav>
+
+<section class="sim-shell">
+  <div class="wrap">
+    <div class="sim-topbar">
+      <div class="sim-badge">ZONE <b id="sim-zone-name">Desert Basin</b> · AIRFRAME <b id="sim-drone-name">—</b></div>
+      <div class="sim-badge"><span class="lvl" id="sim-level">LEVEL 1</span></div>
+    </div>
+
+    <div class="sim-stage cam-fpv" id="sim-stage">
+      <div class="zone-desert" style="position:absolute; inset:0;">
+        <div class="z-sun"></div>
+        <svg class="z-dune d1" viewBox="0 0 1000 200" preserveAspectRatio="none" style="height:180px;"><path d="M0 120 Q150 60 300 110 T600 100 T1000 130 V200 H0 Z" fill="#5a3818"/></svg>
+        <svg class="z-dune d2" viewBox="0 0 1000 200" preserveAspectRatio="none" style="height:120px;"><path d="M0 150 Q200 110 400 145 T800 140 T1000 160 V200 H0 Z" fill="#42280f"/></svg>
+        <div class="z-haze"></div>
+      </div>
+
+      <svg class="crosshair" viewBox="0 0 60 60"><circle cx="30" cy="30" r="20" fill="none" stroke="#4ce0d2" stroke-width="1"/><line x1="30" y1="4" x2="30" y2="16" stroke="#4ce0d2"/><line x1="30" y1="44" x2="30" y2="56" stroke="#4ce0d2"/><line x1="4" y1="30" x2="16" y2="30" stroke="#4ce0d2"/><line x1="44" y1="30" x2="56" y2="30" stroke="#4ce0d2"/></svg>
+
+      <svg class="drone-actor" viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
+        <g class="prop" style="transform-origin:22px 18px;"><circle cx="22" cy="18" r="9" fill="none" stroke="#eef2f7" stroke-width="2"/></g>
+        <g class="prop" style="transform-origin:78px 18px;"><circle cx="78" cy="18" r="9" fill="none" stroke="#eef2f7" stroke-width="2"/></g>
+        <g class="prop" style="transform-origin:22px 44px;"><circle cx="22" cy="44" r="9" fill="none" stroke="#eef2f7" stroke-width="2"/></g>
+        <g class="prop" style="transform-origin:78px 44px;"><circle cx="78" cy="44" r="9" fill="none" stroke="#eef2f7" stroke-width="2"/></g>
+        <line x1="22" y1="18" x2="78" y2="44" stroke="#4ce0d2" stroke-width="3"/>
+        <line x1="78" y1="18" x2="22" y2="44" stroke="#4ce0d2" stroke-width="3"/>
+        <rect x="38" y="24" width="24" height="14" rx="3" fill="#ffb454"/>
+        <circle cx="50" cy="31" r="3" fill="#0d1219"/>
+      </svg>
+
+      <svg class="gate clickable" style="top:30%; left:20%;" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="#ff5c5c" stroke-width="3"/><path class="check" d="M20 33 L28 41 L45 22" fill="none" stroke="#4ce0d2" stroke-width="4"/></svg>
+      <div class="gate-label" style="top:calc(30% + 74px); left:20%;">GATE 1</div>
+      <svg class="gate clickable" style="top:48%; left:52%;" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="#ff5c5c" stroke-width="3"/><path class="check" d="M20 33 L28 41 L45 22" fill="none" stroke="#4ce0d2" stroke-width="4"/></svg>
+      <div class="gate-label" style="top:calc(48% + 74px); left:52%;">GATE 2</div>
+      <svg class="gate clickable" style="top:24%; left:78%;" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="#ff5c5c" stroke-width="3"/><path class="check" d="M20 33 L28 41 L45 22" fill="none" stroke="#4ce0d2" stroke-width="4"/></svg>
+      <div class="gate-label" style="top:calc(24% + 74px); left:78%;">GATE 3</div>
+
+      <div class="sim-hud-overlay">
+        <div class="sim-corner tl"><span class="text-amber">◆ THERMAL HAZE ACTIVE</span></div>
+        <div class="sim-corner tr">
+          <div id="cam-label">FPV</div>
+          <button class="cam-btn clickable" id="cam-shift-btn">Shift Camera ⟳</button>
+        </div>
+        <div class="sim-corner bl">
+          <div class="sim-panel">
+            <div class="stat"><span>Altitude</span><span id="stat-alt">--</span></div>
+            <div class="stat warn"><span>Ceiling (airframe)</span><span id="stat-ceiling">--</span></div>
+            <div class="stat"><span>Speed</span><span id="stat-spd">--</span></div>
+            <div class="stat"><span>Heading</span><span id="stat-heading">--</span></div>
+            <div class="stat"><span>Distance remaining</span><span id="stat-dist">--</span></div>
+            <div class="stat"><span>Gates cleared</span><span id="stat-gates">--</span></div>
+          </div>
+        </div>
+        <div class="sim-corner br mono" style="color:var(--mist);">RUN LENGTH<br><span class="text-cyan">2.6 km</span></div>
+      </div>
+
+      <div class="mission-banner" id="mission-banner"></div>
+    </div>
+
+    <div class="sim-controls-row">
+      <a class="btn" href="../simulator.html">◂ Back to mission setup</a>
+      <p class="mono" style="color:var(--mist); font-size:.78rem;">Click a red ring gate to clear it. Use "Shift Camera" to cycle FPV / Chase / Top-Down / Orbit.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Zone Briefing</div>
+      <h2>Desert Basin</h2>
+      <p>Wide, obstacle-free dune fields under a heat-shimmer haze. Thermals push the airframe off its
+        line, so the drill here is holding a speed line through three gates rather than dodging clutter.
+        Best flown low on Level 1 for wide, sweeping gate spacing, or Level 3 for a tight high-altitude
+        crossing above the ridge.</p>
+    </div>
+    <div class="grid grid-3">
+      <div class="card"><div class="tag">Terrain</div><h3>Open dune basin</h3><p>Minimal obstacles, long sightlines, ideal for top-speed runs.</p></div>
+      <div class="card"><div class="tag">Hazard</div><h3>Thermal haze drift</h3><p>Rising heat currents nudge altitude — watch the ceiling stat, not just the stick.</p></div>
+      <div class="card"><div class="tag">Objective</div><h3>3 gates, 2.6 km</h3><p>Clear all three rings before distance-remaining hits zero.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer scanfield">
+  <div class="wrap">
+    <div class="footer-links">
+      <a href="../index.html">Home</a>
+      <a href="../simulator.html">Simulator</a>
+      <a href="../research.html">Research</a>
+      <a href="../telemetry.html">Telemetry</a>
+      <a href="../about.html">About</a>
+    </div>
+    <div class="chingo-mark">CHINGO</div>
+    <div class="footer-credit">chanchal saini <span class="sep">·</span> 친고</div>
+    <div class="footer-fine">Ctrl + Fly — drone flight simulator &amp; research console</div>
+  </div>
+</footer>
+
+<div id="global-hud"></div>
+<script src="../js/hud.js"></script>
+<script>window.ZONE_CONFIG = { name:'Desert Basin', code:'DSB', gates:3, distanceKm:2.6 };</script>
+<script src="../js/zone-sim.js"></script>
+</body>
+</html>

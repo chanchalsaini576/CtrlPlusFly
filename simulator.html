@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulator — Ctrl + Fly</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="plus">Ctrl</span>&nbsp;+&nbsp;Fly<span class="dot"></span></a>
+    <div class="navlinks">
+      <a href="index.html">Home</a>
+      <a href="simulator.html" class="active">Simulator</a>
+      <a href="research.html">Research</a>
+      <a href="telemetry.html">Telemetry</a>
+      <a href="about.html">About</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero scanfield" style="min-height:56vh;">
+  <div class="wrap">
+    <div class="eyebrow">Mission Setup</div>
+    <h1 style="font-size:clamp(2.2rem,6vw,3.6rem);">SELECT LEVEL <span class="accent">/</span> AIRFRAME <span class="accent">/</span> ZONE</h1>
+    <p class="lede">Every zone is its own live environment page. Your level sets the altitude band and
+      obstacle density, your airframe sets top speed and handling — carry both into whichever zone you launch.</p>
+  </div>
+</header>
+
+<section class="section scanfield">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Step 1</div>
+      <h2>Difficulty level</h2>
+      <p>Levels are a true sequence — each one raises the operating altitude band and thins out margin for error.</p>
+    </div>
+    <div class="levels" id="level-select">
+      <button class="level-pill active" data-level="1">LVL 1 — Cadet · 40–90m AGL</button>
+      <button class="level-pill" data-level="2">LVL 2 — Operator · 120–220m AGL</button>
+      <button class="level-pill" data-level="3">LVL 3 — Pilot-in-Command · 260–420m AGL</button>
+    </div>
+  </div>
+</section>
+
+<section class="section scanfield">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Step 2</div>
+      <h2>Choose your airframe</h2>
+      <p>Each airframe changes the simulator's speed and altitude ceiling read-outs in every zone.</p>
+    </div>
+    <div class="grid grid-4" id="drone-select">
+      <button class="card card-link drone-card active" data-drone="Sparrow-X" data-top="62" data-ceil="500" style="text-align:left;cursor:pointer;">
+        <div class="card-swatch"><svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#0d1219"/><g stroke="#4ce0d2" stroke-width="2" fill="none"><line x1="70" y1="35" x2="130" y2="65"/><line x1="130" y1="35" x2="70" y2="65"/><circle cx="70" cy="35" r="9"/><circle cx="130" cy="35" r="9"/><circle cx="70" cy="65" r="9"/><circle cx="130" cy="65" r="9"/><rect x="88" y="42" width="24" height="16" rx="2"/></g></svg></div>
+        <div class="tag">Racer</div>
+        <h3>Sparrow-X</h3>
+        <p>Light quadcopter built for speed runs through tight gates.</p>
+        <div class="meta"><span>Top <b>62</b> km/h</span><span>Ceil <b>500</b>m</span></div>
+      </button>
+      <button class="card card-link drone-card" data-drone="Falcon Q6" data-top="48" data-ceil="700" style="text-align:left;cursor:pointer;">
+        <div class="card-swatch"><svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#0d1219"/><g stroke="#ffb454" stroke-width="2" fill="none"><line x1="60" y1="35" x2="140" y2="35"/><circle cx="60" cy="35" r="8"/><circle cx="100" cy="35" r="8"/><circle cx="140" cy="35" r="8"/><path d="M85 40 L100 70 L115 40 Z"/></g></svg></div>
+        <div class="tag">Survey / Mapper</div>
+        <h3>Falcon Q6</h3>
+        <p>VTOL fixed-wing hybrid, styled after real survey-grade mapping UAVs.</p>
+        <div class="meta"><span>Top <b>48</b> km/h</span><span>Ceil <b>700</b>m</span></div>
+      </button>
+      <button class="card card-link drone-card" data-drone="Asteria Recon" data-top="55" data-ceil="900" style="text-align:left;cursor:pointer;">
+        <div class="card-swatch"><svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#0d1219"/><g stroke="#4ce0d2" stroke-width="2" fill="none"><rect x="80" y="38" width="40" height="24" rx="3"/><line x1="65" y1="30" x2="80" y2="42"/><line x1="135" y1="30" x2="120" y2="42"/><circle cx="60" cy="26" r="7"/><circle cx="140" cy="26" r="7"/></g></svg></div>
+        <div class="tag">Reconnaissance</div>
+        <h3>Asteria Recon</h3>
+        <p>Rugged surveillance frame with dual day/thermal payload styling.</p>
+        <div class="meta"><span>Top <b>55</b> km/h</span><span>Ceil <b>900</b>m</span></div>
+      </button>
+      <button class="card card-link drone-card" data-drone="Atlas Heavy" data-top="34" data-ceil="450" style="text-align:left;cursor:pointer;">
+        <div class="card-swatch"><svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#0d1219"/><g stroke="#ff5c5c" stroke-width="2" fill="none"><rect x="75" y="34" width="50" height="30" rx="3"/><line x1="55" y1="30" x2="75" y2="42"/><line x1="145" y1="30" x2="125" y2="42"/><line x1="55" y1="68" x2="75" y2="56"/><line x1="145" y1="68" x2="125" y2="56"/><circle cx="55" cy="30" r="7"/><circle cx="145" cy="30" r="7"/><circle cx="55" cy="68" r="7"/><circle cx="145" cy="68" r="7"/></g></svg></div>
+        <div class="tag">Heavy-lift</div>
+        <h3>Atlas Heavy</h3>
+        <p>Six-rotor cargo frame, slow and steady, built for stability over speed.</p>
+        <div class="meta"><span>Top <b>34</b> km/h</span><span>Ceil <b>450</b>m</span></div>
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="section scanfield">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Step 3</div>
+      <h2>Pick a zone &amp; launch</h2>
+      <p>Each card opens a fully separate live environment page carrying your level and airframe with it.</p>
+    </div>
+    <div class="grid grid-4">
+      <a class="card card-link zone-link" data-href="zones/desert.html" href="zones/desert.html">
+        <div class="card-swatch"><svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#1a0f08"/><rect y="55" width="200" height="45" fill="#3a2412"/><path d="M0 60 Q40 45 80 60 T200 58 V100 H0 Z" fill="#5a3818"/><circle cx="160" cy="22" r="12" fill="#ffb454" opacity=".85"/></svg></div>
+        <div class="tag">Zone 01</div>
+        <h3>Desert Basin</h3>
+        <p>Sun-scorched dunes, thermal haze, wide-open low-altitude runs.</p>
+        <div class="meta"><span>Best for <b>speed</b> gates</span></div>
+      </a>
+      <a class="card card-link zone-link" data-href="zones/city.html" href="zones/city.html">
+        <div class="card-swatch"><svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#080c14"/><rect x="20" y="30" width="18" height="70" fill="#141e2e"/><rect x="45" y="15" width="20" height="85" fill="#182234"/><rect x="72" y="40" width="16" height="60" fill="#141e2e"/><rect x="95" y="5" width="22" height="95" fill="#1a2436"/><rect x="125" y="35" width="18" height="65" fill="#141e2e"/><rect x="150" y="20" width="20" height="80" fill="#182234"/><g fill="#4ce0d2"><rect x="100" y="20" width="3" height="3"/><rect x="106" y="30" width="3" height="3"/><rect x="49" y="30" width="3" height="3"/></g></svg></div>
+        <div class="tag">Zone 02</div>
+        <h3>Metro Skyline</h3>
+        <p>Tower canyons, tight corridors, gates threaded between rooftops.</p>
+        <div class="meta"><span>Best for <b>precision</b> gates</span></div>
+      </a>
+      <a class="card card-link zone-link" data-href="zones/arctic.html" href="zones/arctic.html">
+        <div class="card-swatch"><svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#0a1420"/><path d="M0 70 L30 40 L55 65 L85 30 L115 68 L145 42 L170 66 L200 50 V100 H0 Z" fill="#c9e6f2" opacity=".85"/><circle cx="150" cy="20" r="10" fill="#eef2f7" opacity=".7"/></svg></div>
+        <div class="tag">Zone 03</div>
+        <h3>Arctic Ridge</h3>
+        <p>Whiteout wind gusts and glacier peaks, testing altitude discipline.</p>
+        <div class="meta"><span>Best for <b>altitude</b> holds</span></div>
+      </a>
+      <a class="card card-link zone-link" data-href="zones/ocean.html" href="zones/ocean.html">
+        <div class="card-swatch"><svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#031420"/><path d="M0 55 Q25 45 50 55 T100 55 T150 55 T200 55 V100 H0 Z" fill="#0a3a52"/><path d="M0 68 Q25 58 50 68 T100 68 T150 68 T200 68 V100 H0 Z" fill="#0d4a68"/><circle cx="40" cy="20" r="9" fill="#4ce0d2" opacity=".6"/></svg></div>
+        <div class="tag">Zone 04</div>
+        <h3>Ocean Platform</h3>
+        <p>Offshore rig approach over open water, crosswind gate runs.</p>
+        <div class="meta"><span>Best for <b>endurance</b> runs</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer scanfield">
+  <div class="wrap">
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="simulator.html">Simulator</a>
+      <a href="research.html">Research</a>
+      <a href="telemetry.html">Telemetry</a>
+      <a href="about.html">About</a>
+    </div>
+    <div class="chingo-mark">CHINGO</div>
+    <div class="footer-credit">chanchal saini <span class="sep">·</span> 친고</div>
+    <div class="footer-fine">Ctrl + Fly — drone flight simulator &amp; research console</div>
+  </div>
+</footer>
+
+<div id="global-hud"></div>
+<script src="js/hud.js"></script>
+<script>
+  var level = 1, drone = 'Sparrow-X', top = 62, ceil = 500;
+
+  document.querySelectorAll('#level-select .level-pill').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('#level-select .level-pill').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      level = btn.dataset.level;
+      syncLinks();
+    });
+  });
+
+  document.querySelectorAll('#drone-select .drone-card').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      document.querySelectorAll('#drone-select .drone-card').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      drone = btn.dataset.drone; top = btn.dataset.top; ceil = btn.dataset.ceil;
+      syncLinks();
+    });
+  });
+
+  function syncLinks(){
+    document.querySelectorAll('.zone-link').forEach(function(a){
+      var base = a.dataset.href;
+      var params = new URLSearchParams({level:level, drone:drone, top:top, ceil:ceil});
+      a.href = base + '?' + params.toString();
+    });
+  }
+  syncLinks();
+</script>
+</body>
+</html>

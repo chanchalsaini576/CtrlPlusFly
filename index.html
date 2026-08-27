@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ctrl + Fly — Drone Flight Simulator & Telemetry Console</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="plus">Ctrl</span>&nbsp;+&nbsp;Fly<span class="dot"></span></a>
+    <div class="navlinks">
+      <a href="index.html" class="active">Home</a>
+      <a href="simulator.html">Simulator</a>
+      <a href="research.html">Research</a>
+      <a href="telemetry.html">Telemetry</a>
+      <a href="about.html">About</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero scanfield">
+  <div class="wrap">
+    <div class="eyebrow">Drone Flight Data &amp; Simulation Console</div>
+    <h1>CTRL <span class="accent">+</span> FLY</h1>
+    <p class="lede">A cinematic drone simulator paired with a real flight-data analysis pipeline —
+      fly across four live environments, clear waypoint gates at three difficulty tiers, then study
+      the same telemetry that powers it: raw logs turned into CSV tracks and KML flight paths.</p>
+    <div class="cta-row">
+      <a class="btn btn-solid" href="simulator.html">Launch Simulator ▸</a>
+      <a class="btn" href="research.html">Drone Research Archive</a>
+    </div>
+    <div class="bootline mono">
+      <span>&gt; initializing flight controller ................. OK</span>
+      <span>&gt; GPS lock acquired ............................. 9 satellites</span>
+      <span>&gt; telemetry link ................................ ACTIVE</span>
+      <span>&gt; standing by for launch input // press start</span>
+    </div>
+  </div>
+
+  <svg class="reticle" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="200" cy="200" r="160" fill="none" stroke="#4ce0d2" stroke-opacity=".35" stroke-width="1"/>
+    <circle cx="200" cy="200" r="120" fill="none" stroke="#4ce0d2" stroke-opacity=".5" stroke-width="1" stroke-dasharray="4 10"/>
+    <circle cx="200" cy="200" r="70" fill="none" stroke="#ffb454" stroke-opacity=".6" stroke-width="1"/>
+    <line x1="200" y1="10" x2="200" y2="70" stroke="#4ce0d2" stroke-opacity=".5"/>
+    <line x1="200" y1="330" x2="200" y2="390" stroke="#4ce0d2" stroke-opacity=".5"/>
+    <line x1="10" y1="200" x2="70" y2="200" stroke="#4ce0d2" stroke-opacity=".5"/>
+    <line x1="330" y1="200" x2="390" y2="200" stroke="#4ce0d2" stroke-opacity=".5"/>
+    <circle cx="200" cy="200" r="3" fill="#ff5c5c"/>
+    <text x="205" y="45" fill="#93a1b7" font-family="JetBrains Mono" font-size="10">N</text>
+    <text x="205" y="150" fill="#4ce0d2" font-family="JetBrains Mono" font-size="10">TGT LOCK</text>
+  </svg>
+</header>
+
+<section class="section scanfield">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">What's inside</div>
+      <h2>One project, two flight decks</h2>
+      <p>Every zone, level and page is a separate live build — not a slideshow. Camera angles, altitude
+        bands and background environments change per level, and the research wing documents the real
+        aircraft this project is modeled on.</p>
+    </div>
+
+    <div class="grid grid-4">
+      <a class="card card-link" href="simulator.html">
+        <div class="tag">01 · Simulate</div>
+        <h3>Flight Simulator</h3>
+        <p>Four environments, three difficulty levels, live HUD, shifting camera rigs, gates to clear.</p>
+        <div class="meta"><span><b>4</b> zones</span><span><b>3</b> levels</span></div>
+      </a>
+      <a class="card card-link" href="research.html">
+        <div class="tag">02 · Study</div>
+        <h3>Drone Research Archive</h3>
+        <p>History of UAV flight plus deep-dives on the ideaForge Q6 and Asteria Aerospace airframes.</p>
+        <div class="meta"><span><b>8+</b> aircraft</span><span>Sourced &amp; cited</span></div>
+      </a>
+      <a class="card card-link" href="telemetry.html">
+        <div class="tag">03 · Analyze</div>
+        <h3>Telemetry Pipeline</h3>
+        <p>How raw flight logs become clean CSV tracks and KML paths for GPS visualization.</p>
+        <div class="meta"><span>CSV</span><span>KML</span><span>Validated</span></div>
+      </a>
+      <a class="card card-link" href="about.html">
+        <div class="tag">04 · Context</div>
+        <h3>About the Build</h3>
+        <p>Stack, design intent, and the people behind Ctrl + Fly.</p>
+        <div class="meta"><span>Python</span><span>Web</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Mission log</div>
+      <h2>What the data pipeline actually does</h2>
+    </div>
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="tag">Extract</div>
+        <h3>Telemetry parsing</h3>
+        <p>Extracted and analyzed telemetry logs from drone flight records — timestamps, altitude,
+          heading, battery and GPS fixes — turning raw binary/CSV exports into structured flight events.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Generate</div>
+        <h3>CSV + KML output</h3>
+        <p>Generated CSV and KML outputs for accurate GPS trajectory visualization, so a flight path
+          can be dropped straight into Google Earth or any GIS tool for review.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Validate</div>
+        <h3>Encrypted record handling</h3>
+        <p>Successfully processed encrypted flight records and validated telemetry data for integrity
+          before it ever reaches a report or a map.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer scanfield">
+  <div class="wrap">
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="simulator.html">Simulator</a>
+      <a href="research.html">Research</a>
+      <a href="telemetry.html">Telemetry</a>
+      <a href="about.html">About</a>
+    </div>
+    <div class="chingo-mark">CHINGO</div>
+    <div class="footer-credit">chanchal saini <span class="sep">·</span> 친고</div>
+    <div class="footer-fine">Ctrl + Fly — drone flight simulator &amp; research console</div>
+  </div>
+</footer>
+
+<div id="global-hud"></div>
+<script src="js/hud.js"></script>
+</body>
+</html>

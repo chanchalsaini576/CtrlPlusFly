@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Ctrl + Fly</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="plus">Ctrl</span>&nbsp;+&nbsp;Fly<span class="dot"></span></a>
+    <div class="navlinks">
+      <a href="index.html">Home</a>
+      <a href="simulator.html">Simulator</a>
+      <a href="research.html">Research</a>
+      <a href="telemetry.html">Telemetry</a>
+      <a href="about.html" class="active">About</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero scanfield" style="min-height:44vh;">
+  <div class="wrap">
+    <div class="eyebrow">About the Build</div>
+    <h1 style="font-size:clamp(2.2rem,6vw,3.6rem);">CTRL <span class="accent">+</span> FLY</h1>
+    <p class="lede">A drone flight data analysis system paired with a cinematic flight simulator —
+      built to show both sides of drone work: the piloting experience and the telemetry underneath it.</p>
+  </div>
+</header>
+
+<section class="section scanfield">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Stack</div>
+      <h2>What it's built with</h2>
+    </div>
+    <div class="grid grid-4">
+      <div class="card"><div class="tag">Backend logic</div><h3>Python</h3><p>Telemetry parsing, validation and CSV/KML generation.</p></div>
+      <div class="card"><div class="tag">Data formats</div><h3>CSV &amp; KML</h3><p>Tabular flight logs and GPS-mappable flight paths.</p></div>
+      <div class="card"><div class="tag">Frontend</div><h3>HTML / CSS / JS</h3><p>Every simulator zone and research page is a standalone, live page.</p></div>
+      <div class="card"><div class="tag">Design language</div><h3>Onboard HUD</h3><p>Cyan telemetry glow, amber cautions, monospace data readouts throughout.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section scanfield">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Structure</div>
+      <h2>How the project is organized</h2>
+    </div>
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="tag">Simulator wing</div>
+        <h3>4 zones × 3 levels</h3>
+        <p>Desert Basin, Metro Skyline, Arctic Ridge and Ocean Platform — each a separate live page with
+          its own environment art, hazard, gate layout and live HUD stats. Level 1–3 changes the altitude
+          band; the chosen airframe changes top speed and ceiling.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Research wing</div>
+        <h3>History + 2 deep dives</h3>
+        <p>A short chronological history of unmanned flight, a gallery of well-known airframes, and
+          detailed specification breakdowns of the ideaForge Q6 mapping drone and the Asteria Aerospace
+          surveillance fleet.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Credits</div>
+      <h2>Built by</h2>
+      <p style="margin-top:6px;">chanchal saini · 친고</p>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer scanfield">
+  <div class="wrap">
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="simulator.html">Simulator</a>
+      <a href="research.html">Research</a>
+      <a href="telemetry.html">Telemetry</a>
+      <a href="about.html">About</a>
+    </div>
+    <div class="chingo-mark">CHINGO</div>
+    <div class="footer-credit">chanchal saini <span class="sep">·</span> 친고</div>
+    <div class="footer-fine">Ctrl + Fly — drone flight simulator &amp; research console</div>
+  </div>
+</footer>
+
+<div id="global-hud"></div>
+<script src="js/hud.js"></script>
+</body>
+</html>

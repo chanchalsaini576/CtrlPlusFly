@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arctic Ridge — Ctrl + Fly Simulator</title>
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .zone-arctic{ background: linear-gradient(180deg,#0a1420 0%,#123246 45%,#1b4a5e 60%,#c9e6f2 100%); }
+  .z-peak{ position:absolute; bottom:0; }
+  .z-aurora{ position:absolute; top:0; left:0; width:100%; height:55%;
+    background: linear-gradient(120deg, transparent 20%, rgba(76,224,210,.18) 40%, rgba(76,224,210,.05) 55%, transparent 70%);
+    animation: auroraDrift 9s ease-in-out infinite alternate; }
+  @keyframes auroraDrift{ from{ transform:translateX(-4%); opacity:.6;} to{ transform:translateX(4%); opacity:1;} }
+  .z-flake{ position:absolute; width:3px; height:3px; background:#eef2f7; border-radius:50%; opacity:.8; animation:flakeFall linear infinite; }
+  @keyframes flakeFall{ from{ transform:translateY(-10px);} to{ transform:translateY(620px);} }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><span class="plus">Ctrl</span>&nbsp;+&nbsp;Fly<span class="dot"></span></a>
+    <div class="navlinks">
+      <a href="../index.html">Home</a>
+      <a href="../simulator.html" class="active">Simulator</a>
+      <a href="../research.html">Research</a>
+      <a href="../telemetry.html">Telemetry</a>
+      <a href="../about.html">About</a>
+    </div>
+  </div>
+</nav>
+
+<section class="sim-shell">
+  <div class="wrap">
+    <div class="sim-topbar">
+      <div class="sim-badge">ZONE <b id="sim-zone-name">Arctic Ridge</b> · AIRFRAME <b id="sim-drone-name">—</b></div>
+      <div class="sim-badge"><span class="lvl" id="sim-level">LEVEL 1</span></div>
+    </div>
+
+    <div class="sim-stage cam-fpv" id="sim-stage">
+      <div class="zone-arctic" style="position:absolute; inset:0;">
+        <div class="z-aurora"></div>
+        <svg class="z-peak" viewBox="0 0 1000 260" preserveAspectRatio="none" style="width:100%; height:230px;">
+          <path d="M0 220 L120 90 L200 170 L300 60 L420 190 L520 100 L620 200 L740 80 L860 180 L1000 130 V260 H0 Z" fill="#e6f2f8" opacity=".92"/>
+          <path d="M0 240 L150 150 L260 210 L400 130 L560 220 L700 150 L850 220 L1000 190 V260 H0 Z" fill="#b9d6e4" opacity=".9"/>
+        </svg>
+        <div class="z-flake" style="left:8%; animation-duration:6s;"></div>
+        <div class="z-flake" style="left:22%; animation-duration:8s;"></div>
+        <div class="z-flake" style="left:38%; animation-duration:5s;"></div>
+        <div class="z-flake" style="left:54%; animation-duration:7s;"></div>
+        <div class="z-flake" style="left:66%; animation-duration:9s;"></div>
+        <div class="z-flake" style="left:78%; animation-duration:6.5s;"></div>
+        <div class="z-flake" style="left:90%; animation-duration:7.5s;"></div>
+      </div>
+
+      <svg class="crosshair" viewBox="0 0 60 60"><circle cx="30" cy="30" r="20" fill="none" stroke="#4ce0d2" stroke-width="1"/><line x1="30" y1="4" x2="30" y2="16" stroke="#4ce0d2"/><line x1="30" y1="44" x2="30" y2="56" stroke="#4ce0d2"/><line x1="4" y1="30" x2="16" y2="30" stroke="#4ce0d2"/><line x1="44" y1="30" x2="56" y2="30" stroke="#4ce0d2"/></svg>
+
+      <svg class="drone-actor" viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
+        <g class="prop" style="transform-origin:22px 18px;"><circle cx="22" cy="18" r="9" fill="none" stroke="#eef2f7" stroke-width="2"/></g>
+        <g class="prop" style="transform-origin:78px 18px;"><circle cx="78" cy="18" r="9" fill="none" stroke="#eef2f7" stroke-width="2"/></g>
+        <g class="prop" style="transform-origin:22px 44px;"><circle cx="22" cy="44" r="9" fill="none" stroke="#eef2f7" stroke-width="2"/></g>
+        <g class="prop" style="transform-origin:78px 44px;"><circle cx="78" cy="44" r="9" fill="none" stroke="#eef2f7" stroke-width="2"/></g>
+        <line x1="22" y1="18" x2="78" y2="44" stroke="#4ce0d2" stroke-width="3"/>
+        <line x1="78" y1="18" x2="22" y2="44" stroke="#4ce0d2" stroke-width="3"/>
+        <rect x="38" y="24" width="24" height="14" rx="3" fill="#ffb454"/>
+        <circle cx="50" cy="31" r="3" fill="#0d1219"/>
+      </svg>
+
+      <svg class="gate clickable" style="top:22%; left:24%;" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="#ff5c5c" stroke-width="3"/><path class="check" d="M20 33 L28 41 L45 22" fill="none" stroke="#4ce0d2" stroke-width="4"/></svg>
+      <div class="gate-label" style="top:calc(22% + 74px); left:24%;">GATE 1</div>
+      <svg class="gate clickable" style="top:14%; left:58%;" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="#ff5c5c" stroke-width="3"/><path class="check" d="M20 33 L28 41 L45 22" fill="none" stroke="#4ce0d2" stroke-width="4"/></svg>
+      <div class="gate-label" style="top:calc(14% + 74px); left:58%;">GATE 2</div>
+      <svg class="gate clickable" style="top:36%; left:82%;" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="#ff5c5c" stroke-width="3"/><path class="check" d="M20 33 L28 41 L45 22" fill="none" stroke="#4ce0d2" stroke-width="4"/></svg>
+      <div class="gate-label" style="top:calc(36% + 74px); left:82%;">GATE 3</div>
+
+      <div class="sim-hud-overlay">
+        <div class="sim-corner tl"><span class="text-amber">◆ WINDCHILL — ALTITUDE DRIFT LIKELY</span></div>
+        <div class="sim-corner tr">
+          <div id="cam-label">FPV</div>
+          <button class="cam-btn clickable" id="cam-shift-btn">Shift Camera ⟳</button>
+        </div>
+        <div class="sim-corner bl">
+          <div class="sim-panel">
+            <div class="stat"><span>Altitude</span><span id="stat-alt">--</span></div>
+            <div class="stat warn"><span>Ceiling (airframe)</span><span id="stat-ceiling">--</span></div>
+            <div class="stat"><span>Speed</span><span id="stat-spd">--</span></div>
+            <div class="stat"><span>Heading</span><span id="stat-heading">--</span></div>
+            <div class="stat"><span>Distance remaining</span><span id="stat-dist">--</span></div>
+            <div class="stat"><span>Gates cleared</span><span id="stat-gates">--</span></div>
+          </div>
+        </div>
+        <div class="sim-corner br mono" style="color:var(--mist);">RUN LENGTH<br><span class="text-cyan">3.1 km</span></div>
+      </div>
+
+      <div class="mission-banner" id="mission-banner"></div>
+    </div>
+
+    <div class="sim-controls-row">
+      <a class="btn" href="../simulator.html">◂ Back to mission setup</a>
+      <p class="mono" style="color:var(--mist); font-size:.78rem;">Click a red ring gate to clear it. Use "Shift Camera" to cycle FPV / Chase / Top-Down / Orbit.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Zone Briefing</div>
+      <h2>Arctic Ridge</h2>
+      <p>Glacier peaks under an aurora sky. Gates sit at staggered heights along the ridge line, so this
+        zone is really a test of altitude discipline — the windchill knocks the airframe off its target
+        band constantly, and the ceiling stat becomes the number to watch above all others.</p>
+    </div>
+    <div class="grid grid-3">
+      <div class="card"><div class="tag">Terrain</div><h3>Glacier ridge line</h3><p>Staggered peak heights force constant altitude correction.</p></div>
+      <div class="card"><div class="tag">Hazard</div><h3>Windchill drift</h3><p>Cold gusts push altitude off-band — the longest run of the four zones.</p></div>
+      <div class="card"><div class="tag">Objective</div><h3>3 gates, 3.1 km</h3><p>The endurance test of the set — hold your band the whole way.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer scanfield">
+  <div class="wrap">
+    <div class="footer-links">
+      <a href="../index.html">Home</a>
+      <a href="../simulator.html">Simulator</a>
+      <a href="../research.html">Research</a>
+      <a href="../telemetry.html">Telemetry</a>
+      <a href="../about.html">About</a>
+    </div>
+    <div class="chingo-mark">CHINGO</div>
+    <div class="footer-credit">chanchal saini <span class="sep">·</span> 친고</div>
+    <div class="footer-fine">Ctrl + Fly — drone flight simulator &amp; research console</div>
+  </div>
+</footer>
+
+<div id="global-hud"></div>
+<script src="../js/hud.js"></script>
+<script>window.ZONE_CONFIG = { name:'Arctic Ridge', code:'ARC', gates:3, distanceKm:3.1 };</script>
+<script src="../js/zone-sim.js"></script>
+</body>
+</html>

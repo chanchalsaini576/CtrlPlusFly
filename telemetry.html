@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Telemetry Pipeline — Ctrl + Fly</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .datatable{ width:100%; border-collapse:collapse; font-family:var(--font-mono); font-size:.8rem; }
+  .datatable th, .datatable td{ border:1px solid var(--line); padding:10px 12px; text-align:left; }
+  .datatable th{ color:var(--amber); text-transform:uppercase; letter-spacing:.06em; font-size:.68rem; background:var(--panel-2); }
+  .datatable td{ color:var(--mist); }
+  .datatable tr:hover td{ background:rgba(76,224,210,.05); color:var(--frost); }
+  .codeblock{ background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:20px; font-family:var(--font-mono); font-size:.76rem; color:var(--cyan-dim); overflow-x:auto; white-space:pre; line-height:1.7; }
+  .pipeline-step{ display:flex; gap:18px; align-items:flex-start; padding:22px 0; border-bottom:1px solid var(--line); }
+  .pipeline-step:last-child{ border-bottom:0; }
+  .pipeline-num{ font-family:var(--font-display); font-size:1.6rem; color:var(--cyan); min-width:52px; }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="plus">Ctrl</span>&nbsp;+&nbsp;Fly<span class="dot"></span></a>
+    <div class="navlinks">
+      <a href="index.html">Home</a>
+      <a href="simulator.html">Simulator</a>
+      <a href="research.html">Research</a>
+      <a href="telemetry.html" class="active">Telemetry</a>
+      <a href="about.html">About</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero scanfield" style="min-height:48vh;">
+  <div class="wrap">
+    <div class="eyebrow">Flight Data Analysis</div>
+    <h1 style="font-size:clamp(2.2rem,6vw,3.6rem);">FROM RAW LOG <span class="accent">TO</span> FLIGHT PATH</h1>
+    <p class="lede">The system behind every HUD number in the simulator: extract telemetry from a flight
+      record, validate it, and export it as CSV and KML so the same track can be plotted on a map or
+      opened in Google Earth.</p>
+  </div>
+</header>
+
+<section class="section scanfield">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Pipeline</div>
+      <h2>Three stages, one flight record</h2>
+    </div>
+    <div class="pipeline-step">
+      <div class="pipeline-num">01</div>
+      <div><h3>Extract</h3><p style="color:var(--mist); margin-top:8px;">Telemetry logs from the drone's flight controller are parsed record by record — timestamp, latitude, longitude, altitude, heading, speed, battery voltage and satellite count are pulled out of each log line and normalized into a single event format.</p></div>
+    </div>
+    <div class="pipeline-step">
+      <div class="pipeline-num">02</div>
+      <div><h3>Validate</h3><p style="color:var(--mist); margin-top:8px;">Encrypted flight records are decrypted and checked for integrity before analysis — corrupted frames, GPS dropouts and out-of-range sensor readings are flagged rather than silently plotted as real flight data.</p></div>
+    </div>
+    <div class="pipeline-step">
+      <div class="pipeline-num">03</div>
+      <div><h3>Export</h3><p style="color:var(--mist); margin-top:8px;">Clean telemetry is written out as a CSV track for spreadsheet analysis and as a KML path for accurate GPS trajectory visualization in mapping tools such as Google Earth.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section scanfield" id="live-console">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Live · Needs backend running</div>
+      <h2>Analysis console</h2>
+      <p>This panel talks to the real Python backend included in this project
+        (<code class="mono">backend/app.py</code>). Run it locally, then use the controls below —
+        nothing here is faked in the browser.</p>
+    </div>
+
+    <div class="card" style="margin-bottom:28px;">
+      <div class="tag">Step 1 — Get a flight</div>
+      <h3>Generate a sample flight or upload your own CSV</h3>
+      <div class="field-row" style="margin-top:18px;">
+        <div class="field">
+          <label for="gen-zone">Zone</label>
+          <select id="gen-zone">
+            <option>Desert Basin</option><option>Metro Skyline</option>
+            <option>Arctic Ridge</option><option>Ocean Platform</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="gen-level">Level</label>
+          <select id="gen-level"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+        </div>
+        <div class="field">
+          <label for="gen-duration">Duration (sec)</label>
+          <input type="number" id="gen-duration" value="60" min="10" max="600">
+        </div>
+        <button class="btn btn-solid" id="btn-generate">Generate Sample Flight</button>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="upload-csv">…or upload your own flight-log CSV</label>
+          <input type="file" id="upload-csv" accept=".csv">
+          <p class="mono" style="font-size:.68rem; color:var(--mist-dim); margin-top:6px;">Tip: try <code>backend/sample_data/sample_flight_log.csv</code> — a full 10-minute flight, 151 records.</p>
+        </div>
+        <button class="btn" id="btn-upload-csv">Validate My CSV</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:28px;">
+      <div class="tag">Step 2 — Encrypted record round-trip</div>
+      <h3>Encrypt the current flight, then decrypt &amp; validate it back</h3>
+      <div class="field-row" style="margin-top:18px;">
+        <div class="field">
+          <label for="enc-pass">Password</label>
+          <input type="password" id="enc-pass" placeholder="any password" value="ctrlfly-demo">
+        </div>
+        <button class="btn btn-amber" id="btn-encrypt">Encrypt Current Flight</button>
+        <a class="btn" id="link-download-enc" href="/api/telemetry/encrypted.bin">Download .enc</a>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="dec-file">Upload an .enc file (optional — leave empty to use the one just encrypted)</label>
+          <input type="file" id="dec-file" accept=".enc,.bin">
+          <p class="mono" style="font-size:.68rem; color:var(--mist-dim); margin-top:6px;">Tip: try <code>backend/sample_data/sample_flight_encrypted.enc</code> with password <code>ctrlfly-demo</code>.</p>
+        </div>
+        <div class="field">
+          <label for="dec-pass">Password</label>
+          <input type="password" id="dec-pass" placeholder="same password" value="ctrlfly-demo">
+        </div>
+        <button class="btn" id="btn-decrypt">Decrypt &amp; Validate</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="tag">Step 3 — Results</div>
+      <h3>Validation report &amp; export</h3>
+      <div class="result-summary" id="result-summary" style="display:none;">
+        <div class="stat-block"><div class="num" id="rs-total">0</div><div class="lbl">Total records</div></div>
+        <div class="stat-block"><div class="num" id="rs-valid">0</div><div class="lbl">Valid</div></div>
+        <div class="stat-block"><div class="num" id="rs-flagged">0</div><div class="lbl">Flagged</div></div>
+      </div>
+      <div class="field-row">
+        <a class="btn btn-solid" id="link-download-csv" href="/api/telemetry/csv">Download CSV</a>
+        <a class="btn btn-solid" id="link-download-kml" href="/api/telemetry/kml">Download KML</a>
+      </div>
+      <div style="overflow-x:auto; margin-top:8px;">
+        <table class="datatable" id="result-table" style="display:none;">
+          <thead><tr><th>timestamp</th><th>lat</th><th>lon</th><th>alt_m</th><th>speed_kmh</th><th>heading</th><th>battery_v</th><th>sats</th></tr></thead>
+          <tbody id="result-table-body"></tbody>
+        </table>
+      </div>
+      <div class="console-box" id="console-log" style="margin-top:18px;">
+        <div class="line">&gt; console ready — waiting for backend calls…</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section scanfield">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Sample output · CSV</div>
+      <h2>Flight track, tabular form</h2>
+      <p>A trimmed sample from a processed flight log — one row per telemetry fix.</p>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="datatable">
+        <thead><tr><th>timestamp</th><th>lat</th><th>lon</th><th>alt_m</th><th>speed_kmh</th><th>heading</th><th>battery_v</th><th>sats</th></tr></thead>
+        <tbody>
+          <tr><td>00:00:00.0</td><td>26.91240</td><td>75.78730</td><td>0.0</td><td>0.0</td><td>0</td><td>16.8</td><td>9</td></tr>
+          <tr><td>00:00:04.2</td><td>26.91266</td><td>75.78744</td><td>42.3</td><td>18.4</td><td>34</td><td>16.7</td><td>10</td></tr>
+          <tr><td>00:00:08.6</td><td>26.91302</td><td>75.78779</td><td>96.8</td><td>29.1</td><td>41</td><td>16.6</td><td>10</td></tr>
+          <tr><td>00:00:13.0</td><td>26.91355</td><td>75.78821</td><td>118.5</td><td>33.6</td><td>47</td><td>16.5</td><td>11</td></tr>
+          <tr><td>00:00:17.5</td><td>26.91401</td><td>75.78877</td><td>121.0</td><td>31.9</td><td>52</td><td>16.4</td><td>11</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section scanfield">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Sample output · KML</div>
+      <h2>Same track, as a GPS path</h2>
+      <p>The same flight exported as a KML LineString, ready to drop into any mapping tool.</p>
+    </div>
+    <div class="codeblock">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;kml xmlns="http://www.opengis.net/kml/2.2"&gt;
+  &lt;Document&gt;
+    &lt;name&gt;ctrlfly_flight_track.kml&lt;/name&gt;
+    &lt;Placemark&gt;
+      &lt;name&gt;Flight Path — Desert Basin Run&lt;/name&gt;
+      &lt;LineString&gt;
+        &lt;altitudeMode&gt;absolute&lt;/altitudeMode&gt;
+        &lt;coordinates&gt;
+          75.78730,26.91240,0.0
+          75.78744,26.91266,42.3
+          75.78779,26.91302,96.8
+          75.78821,26.91355,118.5
+          75.78877,26.91401,121.0
+        &lt;/coordinates&gt;
+      &lt;/LineString&gt;
+    &lt;/Placemark&gt;
+  &lt;/Document&gt;
+&lt;/kml&gt;</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Summary</div>
+      <h2>What this pipeline achieved</h2>
+    </div>
+    <div class="grid grid-3">
+      <div class="card"><div class="tag">Extract</div><h3>Telemetry parsing</h3><p>Extracted and analyzed telemetry logs from drone flight records across altitude, heading, GPS and battery channels.</p></div>
+      <div class="card"><div class="tag">Generate</div><h3>CSV + KML output</h3><p>Generated CSV and KML outputs for accurate GPS trajectory visualization on any mapping tool.</p></div>
+      <div class="card"><div class="tag">Validate</div><h3>Encrypted record handling</h3><p>Successfully processed encrypted flight records and validated telemetry data before export.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer scanfield">
+  <div class="wrap">
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="simulator.html">Simulator</a>
+      <a href="research.html">Research</a>
+      <a href="telemetry.html">Telemetry</a>
+      <a href="about.html">About</a>
+    </div>
+    <div class="chingo-mark">CHINGO</div>
+    <div class="footer-credit">chanchal saini <span class="sep">·</span> 친고</div>
+    <div class="footer-fine">Ctrl + Fly — drone flight simulator &amp; research console</div>
+  </div>
+</footer>
+
+<div id="global-hud"></div>
+<script src="js/hud.js"></script>
+<script src="js/telemetry-console.js"></script>
+</body>
+</html>

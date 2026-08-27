@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metro Skyline — Ctrl + Fly Simulator</title>
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .zone-city{ background: linear-gradient(180deg,#050810 0%,#0a1120 55%,#0d1526 100%); }
+  .z-tower{ position:absolute; bottom:0; background:#121b2c; border-top:1px solid rgba(76,224,210,.15); }
+  .z-win{ position:absolute; width:5px; height:7px; background:#ffb454; opacity:.85; animation:winFlick 5s infinite; }
+  .z-win.c{ background:#4ce0d2; }
+  @keyframes winFlick{ 0%,88%{opacity:.85} 90%{opacity:.15} 100%{opacity:.85} }
+  .z-moon{ position:absolute; top:8%; left:10%; width:70px; height:70px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #eef2f7, #b9c6d6 70%); box-shadow:0 0 60px 12px rgba(238,242,247,.25); }
+  .z-fog{ position:absolute; inset:0; background:linear-gradient(180deg, transparent 60%, rgba(76,224,210,.06) 100%); }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><span class="plus">Ctrl</span>&nbsp;+&nbsp;Fly<span class="dot"></span></a>
+    <div class="navlinks">
+      <a href="../index.html">Home</a>
+      <a href="../simulator.html" class="active">Simulator</a>
+      <a href="../research.html">Research</a>
+      <a href="../telemetry.html">Telemetry</a>
+      <a href="../about.html">About</a>
+    </div>
+  </div>
+</nav>
+
+<section class="sim-shell">
+  <div class="wrap">
+    <div class="sim-topbar">
+      <div class="sim-badge">ZONE <b id="sim-zone-name">Metro Skyline</b> · AIRFRAME <b id="sim-drone-name">—</b></div>
+      <div class="sim-badge"><span class="lvl" id="sim-level">LEVEL 1</span></div>
+    </div>
+
+    <div class="sim-stage cam-fpv" id="sim-stage">
+      <div class="zone-city" style="position:absolute; inset:0;">
+        <div class="z-moon"></div>
+        <div class="z-tower" style="left:2%; width:10%; height:55%;"></div>
+        <div class="z-tower" style="left:14%; width:8%; height:78%;"></div>
+        <div class="z-tower" style="left:24%; width:7%; height:44%;"></div>
+        <div class="z-tower" style="left:33%; width:9%; height:92%;"></div>
+        <div class="z-tower" style="left:45%; width:8%; height:60%;"></div>
+        <div class="z-tower" style="left:55%; width:11%; height:82%;"></div>
+        <div class="z-tower" style="left:68%; width:8%; height:50%;"></div>
+        <div class="z-tower" style="left:78%; width:9%; height:70%;"></div>
+        <div class="z-tower" style="left:90%; width:9%; height:38%;"></div>
+        <!-- scattered windows -->
+        <div class="z-win" style="left:4%; bottom:10%;"></div><div class="z-win c" style="left:5%; bottom:20%;"></div>
+        <div class="z-win" style="left:16%; bottom:30%;"></div><div class="z-win" style="left:17%; bottom:50%;"></div>
+        <div class="z-win c" style="left:35%; bottom:60%;"></div><div class="z-win" style="left:36%; bottom:40%;"></div>
+        <div class="z-win" style="left:57%; bottom:35%;"></div><div class="z-win c" style="left:58%; bottom:55%;"></div>
+        <div class="z-win" style="left:80%; bottom:25%;"></div><div class="z-win" style="left:81%; bottom:45%;"></div>
+        <div class="z-fog"></div>
+      </div>
+
+      <svg class="crosshair" viewBox="0 0 60 60"><circle cx="30" cy="30" r="20" fill="none" stroke="#4ce0d2" stroke-width="1"/><line x1="30" y1="4" x2="30" y2="16" stroke="#4ce0d2"/><line x1="30" y1="44" x2="30" y2="56" stroke="#4ce0d2"/><line x1="4" y1="30" x2="16" y2="30" stroke="#4ce0d2"/><line x1="44" y1="30" x2="56" y2="30" stroke="#4ce0d2"/></svg>
+
+      <svg class="drone-actor" viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
+        <g class="prop" style="transform-origin:22px 18px;"><circle cx="22" cy="18" r="9" fill="none" stroke="#eef2f7" stroke-width="2"/></g>
+        <g class="prop" style="transform-origin:78px 18px;"><circle cx="78" cy="18" r="9" fill="none" stroke="#eef2f7" stroke-width="2"/></g>
+        <g class="prop" style="transform-origin:22px 44px;"><circle cx="22" cy="44" r="9" fill="none" stroke="#eef2f7" stroke-width="2"/></g>
+        <g class="prop" style="transform-origin:78px 44px;"><circle cx="78" cy="44" r="9" fill="none" stroke="#eef2f7" stroke-width="2"/></g>
+        <line x1="22" y1="18" x2="78" y2="44" stroke="#4ce0d2" stroke-width="3"/>
+        <line x1="78" y1="18" x2="22" y2="44" stroke="#4ce0d2" stroke-width="3"/>
+        <rect x="38" y="24" width="24" height="14" rx="3" fill="#ffb454"/>
+        <circle cx="50" cy="31" r="3" fill="#0d1219"/>
+      </svg>
+
+      <svg class="gate clickable" style="top:26%; left:16%;" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="#ff5c5c" stroke-width="3"/><path class="check" d="M20 33 L28 41 L45 22" fill="none" stroke="#4ce0d2" stroke-width="4"/></svg>
+      <div class="gate-label" style="top:calc(26% + 74px); left:16%;">GATE 1</div>
+      <svg class="gate clickable" style="top:44%; left:47%;" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="#ff5c5c" stroke-width="3"/><path class="check" d="M20 33 L28 41 L45 22" fill="none" stroke="#4ce0d2" stroke-width="4"/></svg>
+      <div class="gate-label" style="top:calc(44% + 74px); left:47%;">GATE 2</div>
+      <svg class="gate clickable" style="top:20%; left:74%;" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="#ff5c5c" stroke-width="3"/><path class="check" d="M20 33 L28 41 L45 22" fill="none" stroke="#4ce0d2" stroke-width="4"/></svg>
+      <div class="gate-label" style="top:calc(20% + 74px); left:74%;">GATE 3</div>
+      <svg class="gate clickable" style="top:58%; left:86%;" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="#ff5c5c" stroke-width="3"/><path class="check" d="M20 33 L28 41 L45 22" fill="none" stroke="#4ce0d2" stroke-width="4"/></svg>
+      <div class="gate-label" style="top:calc(58% + 74px); left:86%;">GATE 4</div>
+
+      <div class="sim-hud-overlay">
+        <div class="sim-corner tl"><span class="text-amber">◆ NARROW CORRIDOR — REDUCE SPEED</span></div>
+        <div class="sim-corner tr">
+          <div id="cam-label">FPV</div>
+          <button class="cam-btn clickable" id="cam-shift-btn">Shift Camera ⟳</button>
+        </div>
+        <div class="sim-corner bl">
+          <div class="sim-panel">
+            <div class="stat"><span>Altitude</span><span id="stat-alt">--</span></div>
+            <div class="stat warn"><span>Ceiling (airframe)</span><span id="stat-ceiling">--</span></div>
+            <div class="stat"><span>Speed</span><span id="stat-spd">--</span></div>
+            <div class="stat"><span>Heading</span><span id="stat-heading">--</span></div>
+            <div class="stat"><span>Distance remaining</span><span id="stat-dist">--</span></div>
+            <div class="stat"><span>Gates cleared</span><span id="stat-gates">--</span></div>
+          </div>
+        </div>
+        <div class="sim-corner br mono" style="color:var(--mist);">RUN LENGTH<br><span class="text-cyan">1.9 km</span></div>
+      </div>
+
+      <div class="mission-banner" id="mission-banner"></div>
+    </div>
+
+    <div class="sim-controls-row">
+      <a class="btn" href="../simulator.html">◂ Back to mission setup</a>
+      <p class="mono" style="color:var(--mist); font-size:.78rem;">Click a red ring gate to clear it. Use "Shift Camera" to cycle FPV / Chase / Top-Down / Orbit.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Zone Briefing</div>
+      <h2>Metro Skyline</h2>
+      <p>A night run between office towers. Gates sit between buildings instead of in open air, so the
+        gate count climbs to four and the margin for a wide turn disappears fast — this is the zone
+        built to reward the precision-focused airframes over the speed-focused ones.</p>
+    </div>
+    <div class="grid grid-3">
+      <div class="card"><div class="tag">Terrain</div><h3>Tower canyon</h3><p>Gates threaded between rooftops and street canyons after dark.</p></div>
+      <div class="card"><div class="tag">Hazard</div><h3>Corridor pinch</h3><p>Less lateral room than any other zone — overshoot and you clip a tower face.</p></div>
+      <div class="card"><div class="tag">Objective</div><h3>4 gates, 1.9 km</h3><p>Shorter run, tighter tolerances — precision over raw speed.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer scanfield">
+  <div class="wrap">
+    <div class="footer-links">
+      <a href="../index.html">Home</a>
+      <a href="../simulator.html">Simulator</a>
+      <a href="../research.html">Research</a>
+      <a href="../telemetry.html">Telemetry</a>
+      <a href="../about.html">About</a>
+    </div>
+    <div class="chingo-mark">CHINGO</div>
+    <div class="footer-credit">chanchal saini <span class="sep">·</span> 친고</div>
+    <div class="footer-fine">Ctrl + Fly — drone flight simulator &amp; research console</div>
+  </div>
+</footer>
+
+<div id="global-hud"></div>
+<script src="../js/hud.js"></script>
+<script>window.ZONE_CONFIG = { name:'Metro Skyline', code:'MTS', gates:4, distanceKm:1.9 };</script>
+<script src="../js/zone-sim.js"></script>
+</body>
+</html>
