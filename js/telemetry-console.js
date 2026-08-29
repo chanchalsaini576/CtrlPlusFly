@@ -9,6 +9,8 @@
   var rsValid = document.getElementById('rs-valid');
   var rsFlagged = document.getElementById('rs-flagged');
 
+  
+
   if(!logBox) return; // this script only runs on telemetry.html
 
   function log(msg, kind){
