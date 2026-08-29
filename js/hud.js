@@ -1,5 +1,5 @@
 // hud.js - ye woh chhota telemetry box hai jo har page ke corner me dikhta hai
-// bas random numbers generate karke ALT/SPD/GPS/SIG dikha raha hai, thoda alive feel dene ke liye
+// bas random numbers generate karke ALT/SPD/GPS/SIG dikha raha hai, thoda alive feel dene ke  liye  
 (function(){
   var mount = document.getElementById('global-hud');
   if(!mount) return;
